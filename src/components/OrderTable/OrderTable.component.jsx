@@ -1,20 +1,20 @@
 import React, {useState, useEffect} from 'react'
 import { Table, Empty } from 'antd'
 import moment from 'moment'
-import './OrderTable.css'
+import './OrderTable.scss'
+import 'antd/es/table/style/css'
 
 const OrderTableComponent = () => {
   const [data, setData] = useState([])
 
   useEffect(() => {
     const getData = async () => {
-      fetch(`http://localhost:3000/order`, {
+      fetch('https://pizzaapp-pyco-intern-group5.herokuapp.com/order', {
       method: 'GET',
       headers: {'Content-type': 'application/json; charset=UTF-8'}
       }).then(response => {
         return response.json()
       }).then(result => {
-        console.log(result)
         setData(result)
         setTimeout(getData, 3000) //recall API after 3s
       })
@@ -24,7 +24,7 @@ const OrderTableComponent = () => {
 
   const columns = [
 		{
-			title: 'STT',
+			title: 'Order Number',
 			dataIndex: 'index',
 			key: 'index',
 			width: '5%',
@@ -32,11 +32,11 @@ const OrderTableComponent = () => {
 			render: (text, record) => data.indexOf(record) + 1,
 		},
 		{
-			title: 'Chi tiết',
+			title: 'Details',
 			dataIndex: 'orderLineArray',
 			key: 'orderLineArray:',
 			align: 'left',
-      width: '40%',
+      width: '32%',
       render: (orderLineArray) => (
         orderLineArray.map((orderLine) => (
           <>
@@ -52,34 +52,54 @@ const OrderTableComponent = () => {
       )
 		},
 		{
-			title: 'Người đặt',
+			title: 'Total Price',
+			dataIndex: 'totalPrice',
+			key: 'totalPrice',
+			align: 'center',
+			width: '8%',
+			render: (totalPrice) => <big>{totalPrice}$</big>
+		},
+		{
+			title: 'User',
 			dataIndex: 'user',
 			key: 'user',
 			align: 'left',
       width: '20%',
-      render: (user) => <span>{user.name}<br/>{user.address}<br/>{user.phone}</span>
+      render: (user) => <span>
+				<strong>Name: </strong>{user.name}
+				<br/>
+				<strong>Address: </strong>{user.address}
+				<br/>
+				<strong>Phone: </strong>{user.phone}
+			</span>
 		},
 		{
-			title: 'Người nhận',
+			title: 'Receiver',
 			dataIndex: 'receiver',
 			key: 'receiver',
 			align: 'left',
       width: '20%',
-      render: (receiver, record) => <span>{record.name}<br/>{record.address}<br/>{record.phone}</span>
+      render: (receiver, record) => <span>
+				<strong>Name: </strong>{record.name}
+				<br/>
+				<strong>Address: </strong>{record.address}
+				<br/>
+				<strong>Phone: </strong>{record.phone}
+			</span>
 		},
 		{
-			title: 'Ghi chú',
+			title: 'Note',
 			dataIndex: 'note',
 			key: 'note',
 			width: '10%',
 			align: 'left',
 		},
 		{
-			title: 'Thời gian',
+			title: 'Time',
 			dataIndex: 'createdAt',
 			key: 'createdAt',
 			width: '5%',
-			align: 'center',
+			align: 'left',
 			render: (createdAt) => <span>{moment(createdAt).format('DD/MM/YYYY HH:mm:ss')}</span>,
 		},
 	];
@@ -95,7 +115,7 @@ const OrderTableComponent = () => {
 					emptyText: (
 						<Empty
 							image={Empty.PRESENTED_IMAGE_SIMPLE}
-							description="Không có dữ liệu"
+							description="Empty data"
 						/>
 					),
 				}}
