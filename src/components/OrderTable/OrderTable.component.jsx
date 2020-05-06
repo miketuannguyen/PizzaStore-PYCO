@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Table, Empty } from 'antd'
 import moment from 'moment'
+import './OrderTable.css'
 
 const OrderTableComponent = () => {
   const [data, setData] = useState([])
