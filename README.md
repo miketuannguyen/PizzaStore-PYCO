@@ -6,6 +6,9 @@ In the project directory, you can run:
 
 ### `yarn start`
 
+**For windows:** please set ```"start": "set PORT=3001 && react-scripts start"``` in ```package.json```
+**For linux:** please set ```"start": "PORT=3001 react-scripts start"``` in ```package.json```
+
 Runs the app in the development mode.<br />
 Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
 
