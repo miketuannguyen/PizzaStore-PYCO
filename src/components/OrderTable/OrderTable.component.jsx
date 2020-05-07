@@ -15,6 +15,7 @@ const OrderTableComponent = () => {
       }).then(response => {
         return response.json()
       }).then(result => {
+				console.log(result)
         setData(result)
         setTimeout(getData, 3000) //recall API after 3s
       })
@@ -36,16 +37,21 @@ const OrderTableComponent = () => {
 			dataIndex: 'orderLineArray',
 			key: 'orderLineArray:',
 			align: 'left',
-      width: '32%',
+      width: '35%',
       render: (orderLineArray) => (
         orderLineArray.map((orderLine) => (
           <>
-            <span>{orderLine.product.title}</span>
-            {' ('}
-            {orderLine.optionArray.map((option, index, optionArray) => <span>
-              {' ' + option.title + (index !== (optionArray.length - 1) ? ', ' : ' ')}
-            </span>)}
-            {')'}
+            <big>{orderLine.product.title}</big>
+						{orderLine.optionArray.length !== 0 ?
+							<>
+								{' ('}
+            		{orderLine.optionArray.map((option, index, optionArray) =>
+								<big>
+              		{' ' + option.title + (index !== (optionArray.length - 1) ? ', ' : ' ')}
+            		</big>)}
+            		{')'}
+							</> : null}
+							&nbsp;- <big>{orderLine.quantity} Unit</big>
             <br/>
           </>
         ))
@@ -56,7 +62,7 @@ const OrderTableComponent = () => {
 			dataIndex: 'totalPrice',
 			key: 'totalPrice',
 			align: 'center',
-			width: '8%',
+			width: '5%',
 			render: (totalPrice) => <big>{totalPrice}$</big>
 		},
 		{
