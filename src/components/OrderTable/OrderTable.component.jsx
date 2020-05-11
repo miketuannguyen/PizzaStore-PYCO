@@ -15,7 +15,6 @@ const OrderTableComponent = () => {
       }).then(response => {
         return response.json()
       }).then(result => {
-				console.log(result)
         setData(result)
         setTimeout(getData, 3000) //recall API after 3s
       })
@@ -66,11 +65,19 @@ const OrderTableComponent = () => {
 			render: (totalPrice) => <big>{totalPrice}$</big>
 		},
 		{
+			title: 'Collecting Total',
+			dataIndex: 'totalPrice',
+			key: 'totalPrice',
+			align: 'center',
+			width: '5%',
+			render: (totalPrice) => <big>{totalPrice}$</big>
+		},
+		{
 			title: 'User',
 			dataIndex: 'user',
 			key: 'user',
 			align: 'left',
-      width: '20%',
+      width: '15%',
       render: (user) => <span>
 				<strong>Name: </strong>{user.name}
 				<br/>
